@@ -1,0 +1,22 @@
+<div class="lightDevices">
+    <div class="device" *ngFor="let device of lightDevicesList; index as i">
+        <div>{{i}}</div>
+        <div>{{device.name}}</div>
+        <div>{{device.pin}}</div>
+        <div>{{device.lux}}</div>
+        <div>
+            <ng-container
+                *ngIf="!isEdited[i]; then displayEditButton; else displaySaveButton">
+            </ng-container>
+
+            <ng-template #displayEditButton>
+                <button type="button" class="edit" (click)="editDeviceSettings(i)">Edytuj</button>
+            </ng-template>
+
+            <ng-template #displaySaveButton>
+                <button type="button" class="cancel" (click)="cancelDeviceSettings(i)">Anuluj</button>
+                <button type="button" class="save" (click)="saveDeviceSettings(i, device)">Zapisz</button>
+            </ng-template>
+        </div>
+    </div>
+</div>
