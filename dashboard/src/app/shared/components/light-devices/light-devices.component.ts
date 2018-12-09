@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {LightSettings} from "../../models/light-settings";
+import { Component, Input, OnInit } from '@angular/core';
+import { LightSettings } from '../../models/light-settings';
 
 @Component({
     selector: 'app-light-devices',
@@ -18,7 +18,7 @@ export class LightDevicesComponent implements OnInit {
             for (let i = 0; i < val.length; i++) {
                 this.isEdited.push(false);
             }
-            this._lightDevicesList = val
+            this._lightDevicesList = val;
         }
     }
 
@@ -26,11 +26,9 @@ export class LightDevicesComponent implements OnInit {
         return this._lightDevicesList;
     }
 
-    constructor() {
-    }
+    constructor() {}
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     cancelDeviceSettings(val: number): void {
         this.isEdited[val] = false;

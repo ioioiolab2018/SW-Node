@@ -1,0 +1,21 @@
+div.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div.logo {
+        display: flex;
+        align-items: center;
+        padding: 0 30px;
+
+        img {
+            height: 40px;
+        }
+
+        h1 {
+            font-weight: 500;
+            margin-left: 10px;
+            color: rgb(18, 18, 18);
+        }
+    }
+}

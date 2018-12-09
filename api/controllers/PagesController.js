@@ -1,5 +1,6 @@
 exports.home = (req, res) => {
-    res.render('home', {
-        formMessage: req.flash('form')
-    });
+    res.sendFile(__dirname + '/index.html');
+    // res.render('home', {
+    //     formMessage: req.flash('form')
+    // });
 };
