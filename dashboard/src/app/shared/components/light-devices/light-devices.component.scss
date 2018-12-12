@@ -1,69 +1,135 @@
-.lightDevices {
-    display: flex;
-    flex-direction: column;
+section {
     width: 100%;
+    max-width: 1280px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+    margin-bottom: 20px;
 
-    .device {
+    header {
         display: flex;
+        border-radius: 8px 8px 0 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        background-color: #fff;
+        box-sizing: border-box;
+        height: 48px;
+
+        div {
+            background-color: #fff;
+            border: none;
+            box-shadow: none;
+            box-sizing: border-box;
+            text-align: center;
+            color: rgba(0, 0, 0, 0.54);
+            font-size: 14px;
+            font-weight: 500;
+            height: 46px;
+            line-height: 48px;
+            margin-left: 0;
+            text-transform: uppercase;
+        }
+    }
+
+    .cell {
+        display: flex;
+        justify-content: space-around;
         align-items: center;
-        width: 100%;
+        line-height: 30px;
 
-        > div {
-            &:nth-of-type(5n + 1) {
-                flex-basis: 20px;
-            }
+        input {
+            box-sizing: border-box;
+            background-color: transparent;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid rgb(117, 163, 255);
+            line-height: 30px;
+            text-align: center;
+        }
 
-            &:nth-of-type(5n + 2) {
-                flex-grow: 1;
-            }
+        input[type='number']::-webkit-inner-spin-button,
+        input[type='number']::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
-            &:nth-of-type(5n + 3),
-            &:nth-of-type(5n + 4) {
-                flex-basis: 150px;
-            }
+        input[type='number'] {
+            -moz-appearance: textfield;
+        }
 
-            &:nth-of-type(5n) {
-                flex-basis: 100px;
-            }
+        &.buttons button {
+            padding: 4px 6px;
+            width: 29px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 16px;
+            text-transform: uppercase;
+            cursor: pointer;
 
-            &:nth-of-type(5n) button {
-                border: none;
-                border-radius: 5px;
+            &:focus {
                 outline: none;
-                color: white;
-                font-weight: bold;
-                text-transform: uppercase;
-                cursor: pointer;
+            }
 
-                &:focus {
-                    outline: none;
-                }
+            &.cancel {
+                font-weight: 900;
+                background-color: orange;
+            }
 
-                &.cancel {
-                    background-color: red;
-                }
+            &.edit {
+                background-color: dodgerblue;
+            }
 
-                &.edit {
-                    background-color: dodgerblue;
-                }
+            &.remove {
+                background-color: red;
+            }
 
-                &.save {
-                    background-color: limegreen;
-                }
+            &.save {
+                background-color: limegreen;
             }
         }
 
-        &:nth-of-type(2n + 1) {
-            background-color: lightblue;
+        &:nth-of-type(5n + 1) {
+            flex-basis: 50px;
+            text-align: center;
         }
 
-        &:nth-of-type(2n + 1) {
-            background-color: lightcyan;
+        &:nth-of-type(5n + 2) {
+            flex-grow: 1;
+        }
+
+        &:nth-of-type(5n + 3),
+        &:nth-of-type(5n + 4) {
+            flex-basis: 150px;
+        }
+
+        &:nth-last-of-type(5n + 1) {
+            flex-basis: 100px;
+            margin: 0 50px;
         }
     }
 
-    .head {
-        background-color: dodgerblue;
-        font-weight: bold;
+    .lightDevices {
+        display: flex;
+        flex-direction: column;
+
+        .row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+
+            &.row:nth-of-type(2n) {
+                background-color: rgb(223, 246, 255);
+            }
+
+            &:nth-of-type(2n + 1) {
+                background-color: rgb(242, 255, 255);
+            }
+        }
     }
+}
+
+.material-icons.md-12 {
+    font-size: 17px;
 }
