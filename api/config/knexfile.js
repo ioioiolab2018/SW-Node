@@ -4,6 +4,6 @@ module.exports = {
         // filename: '/home/pi/Databases/database.db'
         // filename: 'C:/Users/Piotr/Desktop/database.db'
         filename: '../../../database.db',
-        useNullAsDefault: true
-    }
+    },
+    useNullAsDefault: true
 };
