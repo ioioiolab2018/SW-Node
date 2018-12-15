@@ -1,15 +1,19 @@
-<section>
+<section [formArray]="form">
     <header>
-        <div class="cell">Lp.</div>
+        <div class="cell">Id</div>
         <div class="cell">Name</div>
         <div class="cell">Pin</div>
         <div class="cell">Lux</div>
         <div class="cell">Edit</div>
     </header>
     <div class="lightDevices">
-        <div class="row" *ngFor="let device of lightDevicesList; index as i">
-            <div class="cell">{{ i + 1 }}</div>
-            <div class="cell">{{ device.name }}</div>
+        <div
+            class="row"
+            *ngFor="let device of form.controls; index as i"
+            [formGroupName]="i"
+        >
+            <div class="cell" formControlName="id"></div>
+            <div class="cell" formControlName="name">{{ device.name }}</div>
             <div class="cell">
                 <ng-container
                     *ngIf="!isEdited[i]; then: displayPin; else: displayEditPin"
@@ -17,7 +21,7 @@
                 </ng-container>
 
                 <ng-template #displayEditPin>
-                    <input type="number" [(ngModel)]="device.pin" />
+                    <input type="number" formControlName="pin" />
                 </ng-template>
 
                 <ng-template #displayPin> {{ device.pin }} </ng-template>
