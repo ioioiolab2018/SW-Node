@@ -1,3 +1,3 @@
 exports.home = (req, res) => {
-    res.sendFile('../public/index.html');
+    res.sendFile(__dirname + '/index.html');
 };
