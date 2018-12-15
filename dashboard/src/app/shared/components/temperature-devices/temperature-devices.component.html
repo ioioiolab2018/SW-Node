@@ -6,65 +6,67 @@
         <div>Edit</div>
     </header>
     <div class="lightDevices">
-        <div class="device" *ngFor="let device of lightDevicesList; index as i">
-            <div class="row">{{ i + 1 }}</div>
-            <div class="row">{{ device.name }}</div>
-            <div class="row">
-                <ng-container
-                    *ngIf="!isEdited[i]; then: displayPin; else: displayEditPin"
-                >
-                </ng-container>
+        <!--
+            <div class="device" *ngFor="let device of lightDevicesList; index as i">
+                <div class="row">{{ i + 1 }}</div>
+                <div class="row">{{ device.name }}</div>
+                <div class="row">
+                    <ng-container
+                        *ngIf="!isEdited[i]; then: displayPin; else: displayEditPin"
+                    >
+                    </ng-container>
 
-                <ng-template #displayEditPin>
-                    <input type="number" [(ngModel)]="device.pin" />
-                </ng-template>
+                    <ng-template #displayEditPin>
+                        <input type="number" />
+                    </ng-template>
 
-                <ng-template #displayPin> {{ device.pin }} </ng-template>
+                    <ng-template #displayPin> {{ device.pin }} </ng-template>
+                </div>
+                <div class="row buttons">
+                    <ng-container
+                        *ngIf="
+                            !isEdited[i];
+                            then: displayEditButton;
+                            else: displaySaveButton
+                        "
+                    >
+                    </ng-container>
+
+                    <ng-template #displayEditButton>
+                        <button
+                            type="button"
+                            class="edit"
+                            (click)="editDeviceSettings(i)"
+                        >
+                            <i class="material-icons md-12">edit</i>
+                        </button>
+                    </ng-template>
+
+                    <ng-template #displaySaveButton>
+                        <button
+                            type="button"
+                            class="remove"
+                            (click)="cancelDeviceSettings(i)"
+                        >
+                            <i class="material-icons md-12">delete_outline</i>
+                        </button>
+                        <button
+                            type="button"
+                            class="cancel"
+                            (click)="cancelDeviceSettings(i)"
+                        >
+                            <i class="material-icons md-12">close</i>
+                        </button>
+                        <button
+                            type="button"
+                            class="save"
+                            (click)="saveDeviceSettings(i, device)"
+                        >
+                            <i class="material-icons md-12">save_alt</i>
+                        </button>
+                    </ng-template>
+                </div>
             </div>
-            <div class="row buttons">
-                <ng-container
-                    *ngIf="
-                        !isEdited[i];
-                        then: displayEditButton;
-                        else: displaySaveButton
-                    "
-                >
-                </ng-container>
-
-                <ng-template #displayEditButton>
-                    <button
-                        type="button"
-                        class="edit"
-                        (click)="editDeviceSettings(i)"
-                    >
-                        <i class="material-icons md-12">edit</i>
-                    </button>
-                </ng-template>
-
-                <ng-template #displaySaveButton>
-                    <button
-                        type="button"
-                        class="remove"
-                        (click)="cancelDeviceSettings(i)"
-                    >
-                        <i class="material-icons md-12">delete_outline</i>
-                    </button>
-                    <button
-                        type="button"
-                        class="cancel"
-                        (click)="cancelDeviceSettings(i)"
-                    >
-                        <i class="material-icons md-12">close</i>
-                    </button>
-                    <button
-                        type="button"
-                        class="save"
-                        (click)="saveDeviceSettings(i, device)"
-                    >
-                        <i class="material-icons md-12">save_alt</i>
-                    </button>
-                </ng-template>
-            </div>
-        </div>
+        -->
     </div>
 </section>

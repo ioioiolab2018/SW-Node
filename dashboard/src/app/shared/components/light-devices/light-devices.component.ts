@@ -1,7 +1,12 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { LightSettings } from "../../models/light-settings";
+import { Component, OnInit } from "@angular/core";
 import { HttpService } from "src/app/forms/services/http.service";
-import { FormArray, FormGroup, FormControl } from "@angular/forms";
+import {
+    FormArray,
+    FormGroup,
+    FormControl,
+    FormBuilder,
+    Validators
+} from "@angular/forms";
 import { LightDevice } from "src/app/forms/model/light-device";
 
 @Component({
@@ -10,61 +15,105 @@ import { LightDevice } from "src/app/forms/model/light-device";
     styleUrls: ["./light-devices.component.scss"]
 })
 export class LightDevicesComponent implements OnInit {
-    _lightDevicesList: LightSettings[];
-    isEdited: boolean[];
-    form: FormArray;
+    isDisabled: boolean[] = [];
+    form: FormGroup = this.formBuilder.group({
+        devices: this.formBuilder.array([])
+    });
 
-    @Input()
-    set lightDevicesList(val: LightSettings[]) {
-        console.log(val);
-        if (val) {
-            this.isEdited = [];
-            for (let i = 0; i < val.length; i++) {
-                this.isEdited.push(false);
-            }
-            this._lightDevicesList = val;
-        }
+    get devices() {
+        return this.form.get("devices") as FormArray;
     }
 
-    get lightDevicesList() {
-        return this._lightDevicesList;
-    }
-
-    constructor(private httpService: HttpService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        private httpService: HttpService
+    ) {}
 
     // =======================  INIT  ======================= //
     ngOnInit() {
-        this.initForm();
-    }
-
-    private initForm(): void {
-        this.form = new FormArray([]);
+        this.getLightsSetteings();
     }
 
     getLightsSetteings(): void {
-        this.httpService.getLightsSettings().subscribe((val: LightDevice[]) => {
-            val.forEach((element: LightDevice) => {
-                this.form.push(new FormGroup({
-                    id: new FormControl(element.id),
-                    name: new FormControl(element.name),
-                    pin: new FormControl(element.pin),
-                    lux: new FormControl(element.lux),
-                }))
-            })
-        })
+        this.httpService
+            .getLightsConfiguration()
+            .subscribe((val: LightDevice[]) => {
+                const controlsArray: FormArray = this.form.get(
+                    "devices"
+                ) as FormArray;
+
+                this.isDisabled.length = 0;
+                const length = controlsArray.length;
+                for (let index = 0; index < length; index++) {
+                    controlsArray.removeAt(0);
+                }
+
+                val.forEach((element: LightDevice) => {
+                    this.isDisabled.push(true);
+                    controlsArray.push(
+                        new FormGroup({
+                            id: new FormControl({
+                                value: element.id,
+                                disabled: true
+                            }),
+                            name: new FormControl(
+                                {
+                                    value: element.name,
+                                    disabled: true
+                                },
+                                Validators.required
+                            ),
+                            pin: new FormControl(
+                                {
+                                    value: element.pin,
+                                    disabled: true
+                                },
+                                Validators.pattern("[0-9]*")
+                            ),
+                            lux: new FormControl(
+                                {
+                                    value: element.lux,
+                                    disabled: true
+                                },
+                                Validators.pattern("[0-9]*")
+                            )
+                        })
+                    );
+                });
+            });
     }
 
     // =======================  EDIT  ======================= //
-    cancelDeviceSettings(val: number): void {
-        this.isEdited[val] = false;
+    cancelDeviceSettings(): void {
+        this.getLightsSetteings();
     }
 
     editDeviceSettings(val: number): void {
-        this.isEdited[val] = true;
+        const formArray: FormArray = this.form.get("devices") as FormArray;
+        this.isDisabled[val] = false;
+        formArray
+            .at(val)
+            .get("name")
+            .enable();
+        formArray
+            .at(val)
+            .get("pin")
+            .enable();
+        formArray
+            .at(val)
+            .get("lux")
+            .enable();
     }
 
-    saveDeviceSettings(nr: number, val: LightSettings): void {
-        console.log(val);
-        this.cancelDeviceSettings(nr);
+    saveDeviceSettings(control: FormGroup): void {
+        this.httpService.saveLightConfiguration(
+            new LightDevice(
+                control.get("id").value,
+                control.value.name,
+                control.value.pin,
+                control.value.lux
+            )
+        );
+        this.cancelDeviceSettings();
     }
 }

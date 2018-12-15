@@ -1,4 +1,4 @@
-<section [formArray]="form">
+<section [formGroup]="form">
     <header>
         <div class="cell">Id</div>
         <div class="cell">Name</div>
@@ -6,82 +6,60 @@
         <div class="cell">Lux</div>
         <div class="cell">Edit</div>
     </header>
-    <div class="lightDevices">
-        <div
-            class="row"
-            *ngFor="let device of form.controls; index as i"
-            [formGroupName]="i"
-        >
-            <div class="cell" formControlName="id"></div>
-            <div class="cell" formControlName="name">{{ device.name }}</div>
-            <div class="cell">
-                <ng-container
-                    *ngIf="!isEdited[i]; then: displayPin; else: displayEditPin"
-                >
-                </ng-container>
-
-                <ng-template #displayEditPin>
+    <div class="lightDevices" formArrayName="devices">
+        <div class="row" *ngFor="let device of devices; let i = index">
+            <ng-container [formGroupName]="i">
+                <div class="cell">
+                    <input type="number" formControlName="id" />
+                </div>
+                <div class="cell">
+                    <input type="text" formControlName="name" />
+                </div>
+                <div class="cell">
                     <input type="number" formControlName="pin" />
-                </ng-template>
-
-                <ng-template #displayPin> {{ device.pin }} </ng-template>
-            </div>
-            <div class="cell">
-                <ng-container
-                    *ngIf="!isEdited[i]; then: displayLux; else: displayEditLux"
-                >
-                </ng-container>
-
-                <ng-template #displayEditLux>
-                    <input type="number" [(ngModel)]="device.lux" />
-                </ng-template>
-
-                <ng-template #displayLux> {{ device.lux }} </ng-template>
-            </div>
-            <div class="cell buttons">
-                <ng-container
-                    *ngIf="
-                        !isEdited[i];
-                        then: displayEditButton;
-                        else: displaySaveButton
-                    "
-                >
-                </ng-container>
-
-                <ng-template #displayEditButton>
-                    <button
-                        type="button"
-                        class="edit"
-                        (click)="editDeviceSettings(i)"
+                </div>
+                <div class="cell">
+                    <input type="number" formControlName="lux" />
+                </div>
+                <div class="cell buttons">
+                    <ng-container
+                        *ngIf="
+                            isDisabled[i];
+                            then: displayEditButton;
+                            else: displaySaveButton
+                        "
                     >
-                        <i class="material-icons md-12">edit</i>
-                    </button>
-                </ng-template>
+                    </ng-container>
 
-                <ng-template #displaySaveButton>
-                    <button
-                        type="button"
-                        class="remove"
-                        (click)="cancelDeviceSettings(i)"
-                    >
-                        <i class="material-icons md-12">delete_outline</i>
-                    </button>
-                    <button
-                        type="button"
-                        class="cancel"
-                        (click)="cancelDeviceSettings(i)"
-                    >
-                        <i class="material-icons md-12">close</i>
-                    </button>
-                    <button
-                        type="button"
-                        class="save"
-                        (click)="saveDeviceSettings(i, device)"
-                    >
-                        <i class="material-icons md-12">save_alt</i>
-                    </button>
-                </ng-template>
-            </div>
+                    <ng-template #displayEditButton>
+                        <button
+                            type="button"
+                            class="edit"
+                            (click)="editDeviceSettings(i)"
+                        >
+                            <i class="material-icons md-12">edit</i>
+                        </button>
+                    </ng-template>
+
+                    <ng-template #displaySaveButton>
+                        <button
+                            type="button"
+                            class="cancel"
+                            (click)="cancelDeviceSettings()"
+                        >
+                            <i class="material-icons md-12">close</i>
+                        </button>
+                        <button
+                            type="button"
+                            class="save"
+                            (click)="saveDeviceSettings(device)"
+                            [disabled]="!device.valid"
+                        >
+                            <i class="material-icons md-12">save_alt</i>
+                        </button>
+                    </ng-template>
+                </div>
+            </ng-container>
         </div>
     </div>
 </section>
