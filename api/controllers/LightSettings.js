@@ -1,4 +1,4 @@
-const LightSettings = require('../models/light-settings');
+var LightSettings = require('../models/light-settings');
 
 // // Store new application
 exports.fetchAll = (req, res) => {

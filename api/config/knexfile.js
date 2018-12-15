@@ -1,4 +1,4 @@
-module.exports = {
+var dbConfig = {
     client: 'sqlite3',
     connection: {
         // filename: '/home/pi/Databases/database.db'
@@ -6,4 +6,9 @@ module.exports = {
         filename: '../../../database.db',
     },
     useNullAsDefault: true
-};
+  };
+
+
+var knex = require('knex')(dbConfig);
+
+module.exports = knex;

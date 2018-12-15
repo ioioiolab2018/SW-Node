@@ -1,11 +1,15 @@
-const bookshelf = require('../config/bookshelf');
+var dbConfig = {
+    client: 'sqlite3',
+    connection: {
+        filename: '../../database.db',
+    },
+    useNullAsDefault: true
+  };
 
-const LightSetting = bookshelf.Model.extend({
-    tableName: 'lightsettings'
-});
-
-const LightSettings = bookshelf.Collection.extend({
-    model: LightSetting
+var knex = require('knex')(dbConfig);
+var bookshelf = require('bookshelf')(knex);
+var LightSetting = bookshelf.Model.extend({
+    tableName: "lightSettings"
 });
 
 module.exports.create = setting => {
@@ -25,8 +29,12 @@ module.exports.update = setting => {
     }).save();
 };
 
-module.exports.get = () => {
-    // return [{ val: 'OK' }, { val: 'OK' }]
-    // console.log(LightSetting().collection());
-    return LightSettings().fetch();
+module.exports.get = (req, res) => {
+    new LightSetting().fetchAll()
+      .then(function(articles) {
+        res.send(articles.toJSON());
+      }).catch(function(error) {
+        console.log(error);
+        res.send('An error occured');
+      });
 };
