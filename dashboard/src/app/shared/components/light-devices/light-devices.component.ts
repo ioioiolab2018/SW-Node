@@ -31,12 +31,12 @@ export class LightDevicesComponent implements OnInit {
 
     // =======================  INIT  ======================= //
     ngOnInit() {
-        this.getLightsSetteings();
+        this.getLightConfigurations();
     }
 
-    getLightsSetteings(): void {
+    getLightConfigurations(): void {
         this.httpService
-            .getLightsConfiguration()
+            .getLightConfigurations()
             .subscribe((val: LightDevice[]) => {
                 const controlsArray: FormArray = this.form.get(
                     "devices"
@@ -84,11 +84,11 @@ export class LightDevicesComponent implements OnInit {
     }
 
     // =======================  EDIT  ======================= //
-    cancelDeviceSettings(): void {
-        this.getLightsSetteings();
+    cancelEditDeviceConfiguration(): void {
+        this.getLightConfigurations();
     }
 
-    editDeviceSettings(val: number): void {
+    editDeviceConfiguration(val: number): void {
         const formArray: FormArray = this.form.get("devices") as FormArray;
         this.isDisabled[val] = false;
         formArray
@@ -105,7 +105,7 @@ export class LightDevicesComponent implements OnInit {
             .enable();
     }
 
-    saveDeviceSettings(control: FormGroup): void {
+    saveDeviceConfiguration(control: FormGroup): void {
         this.httpService.saveLightConfiguration(
             new LightDevice(
                 control.get("id").value,
@@ -114,6 +114,6 @@ export class LightDevicesComponent implements OnInit {
                 control.value.lux
             )
         );
-        this.cancelDeviceSettings();
+        this.cancelEditDeviceConfiguration();
     }
 }

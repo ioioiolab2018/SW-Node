@@ -1,11 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SettingsComponent } from './settings.component';
-import { LightDevicesModule } from 'src/app/shared/components/light-devices/light-devices.module';
-import { SettingsRoutingModule } from './settings-routing.module';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { SettingsComponent } from "./settings.component";
+import { LightDevicesModule } from "src/app/shared/components/light-devices/light-devices.module";
+import { SettingsRoutingModule } from "./settings-routing.module";
+import { TemperatureDevicesModule } from "src/app/shared/components/temperature-devices/temperature-devices.module";
 
 @NgModule({
     declarations: [SettingsComponent],
-    imports: [CommonModule, SettingsRoutingModule, LightDevicesModule]
+    imports: [
+        CommonModule,
+        SettingsRoutingModule,
+        LightDevicesModule,
+        TemperatureDevicesModule
+    ]
 })
 export class SettingsModule {}

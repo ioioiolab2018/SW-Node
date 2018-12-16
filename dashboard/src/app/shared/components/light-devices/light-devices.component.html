@@ -7,7 +7,7 @@
         <div class="cell">Edit</div>
     </header>
     <div class="lightDevices" formArrayName="devices">
-        <div class="row" *ngFor="let device of devices; let i = index">
+        <div class="row" *ngFor="let device of devices.controls; let i = index">
             <ng-container [formGroupName]="i">
                 <div class="cell">
                     <input type="number" formControlName="id" />
@@ -35,7 +35,7 @@
                         <button
                             type="button"
                             class="edit"
-                            (click)="editDeviceSettings(i)"
+                            (click)="editDeviceConfiguration(i)"
                         >
                             <i class="material-icons md-12">edit</i>
                         </button>
@@ -45,14 +45,14 @@
                         <button
                             type="button"
                             class="cancel"
-                            (click)="cancelDeviceSettings()"
+                            (click)="cancelEditDeviceConfiguration()"
                         >
                             <i class="material-icons md-12">close</i>
                         </button>
                         <button
                             type="button"
                             class="save"
-                            (click)="saveDeviceSettings(device)"
+                            (click)="saveDeviceConfiguration(device)"
                             [disabled]="!device.valid"
                         >
                             <i class="material-icons md-12">save_alt</i>

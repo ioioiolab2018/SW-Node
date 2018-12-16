@@ -1,31 +1,26 @@
-<section>
+<section [formGroup]="form">
     <header>
-        <div>Lp.</div>
-        <div>Name</div>
-        <div>Pin</div>
-        <div>Edit</div>
+        <div class="cell">Id</div>
+        <div class="cell">Name</div>
+        <div class="cell">Pin</div>
+        <div class="cell">Edit</div>
     </header>
-    <div class="lightDevices">
-        <!--
-            <div class="device" *ngFor="let device of lightDevicesList; index as i">
-                <div class="row">{{ i + 1 }}</div>
-                <div class="row">{{ device.name }}</div>
-                <div class="row">
-                    <ng-container
-                        *ngIf="!isEdited[i]; then: displayPin; else: displayEditPin"
-                    >
-                    </ng-container>
-
-                    <ng-template #displayEditPin>
-                        <input type="number" />
-                    </ng-template>
-
-                    <ng-template #displayPin> {{ device.pin }} </ng-template>
+    <div class="temperatureDevices" formArrayName="devices">
+        <div class="row" *ngFor="let device of devices.controls; let i = index">
+            <ng-container [formGroupName]="i">
+                <div class="cell">
+                    <input type="number" formControlName="id" />
                 </div>
-                <div class="row buttons">
+                <div class="cell">
+                    <input type="text" formControlName="name" />
+                </div>
+                <div class="cell">
+                    <input type="number" formControlName="pin" />
+                </div>
+                <div class="cell buttons">
                     <ng-container
                         *ngIf="
-                            !isEdited[i];
+                            isDisabled[i];
                             then: displayEditButton;
                             else: displaySaveButton
                         "
@@ -36,7 +31,7 @@
                         <button
                             type="button"
                             class="edit"
-                            (click)="editDeviceSettings(i)"
+                            (click)="editDeviceConfiguration(i)"
                         >
                             <i class="material-icons md-12">edit</i>
                         </button>
@@ -45,28 +40,22 @@
                     <ng-template #displaySaveButton>
                         <button
                             type="button"
-                            class="remove"
-                            (click)="cancelDeviceSettings(i)"
-                        >
-                            <i class="material-icons md-12">delete_outline</i>
-                        </button>
-                        <button
-                            type="button"
                             class="cancel"
-                            (click)="cancelDeviceSettings(i)"
+                            (click)="cancelEditDeviceConfiguration()"
                         >
                             <i class="material-icons md-12">close</i>
                         </button>
                         <button
                             type="button"
                             class="save"
-                            (click)="saveDeviceSettings(i, device)"
+                            (click)="saveDeviceConfiguration(device)"
+                            [disabled]="!device.valid"
                         >
                             <i class="material-icons md-12">save_alt</i>
                         </button>
                     </ng-template>
                 </div>
-            </div>
-        -->
+            </ng-container>
+        </div>
     </div>
 </section>

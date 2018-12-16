@@ -4,8 +4,6 @@ const router = express.Router();
 var dbConfig = {
 	client: "sqlite3",
 	connection: {
-		// filename: '/home/pi/Databases/database.db'
-		// filename: 'C:/Users/Piotr/Desktop/database.db'
 		filename: "../../database.db"
 	},
 	useNullAsDefault: true
@@ -14,16 +12,21 @@ var dbConfig = {
 var knex = require("knex")(dbConfig);
 var bookshelf = require("bookshelf")(knex);
 
-var LightSetting = bookshelf.Model.extend({
+var LightConfiguration = bookshelf.Model.extend({
 	tableName: "lightSettings"
 });
+// const LightConfigurations = require("../models/light-settings");
+
+var TemperatureConfiguration = bookshelf.Model.extend({
+	tableName: "tempSettings"
+});
+// const TemperatureConfigurations = require("../models/light-settings");
 
 const PagesController = require("../controllers/PagesController");
-const LightSettings = require("../models/light-settings");
 // const ApplicationsController = require('../controllers/ApplicationsController');
 
-router.get("/api/lights-configuration", function(req, res) {
-	new LightSetting()
+router.get("/api/light-configurations", function(req, res) {
+	new LightConfiguration()
 		.fetchAll()
 		.then(function(articles) {
 			res.send(articles.toJSON());
@@ -35,7 +38,31 @@ router.get("/api/lights-configuration", function(req, res) {
 });
 
 router.post("/api/light-configuration", function(req, res) {
-	new LightSetting(req.body)
+	new LightConfiguration(req.body)
+		.save()
+		.then(function(lightDevice) {
+			console.log("Save:", lightDevice.toJSON());
+		})
+		.catch(function(error) {
+			console.log(error);
+			res.send("An error occured");
+		});
+});
+
+router.get("/api/temperature-configurations", function(req, res) {
+	new TemperatureConfiguration()
+		.fetchAll()
+		.then(function(articles) {
+			res.send(articles.toJSON());
+		})
+		.catch(function(error) {
+			console.log(error);
+			res.send("An error occured");
+		});
+});
+
+router.post("/api/temperature-configuration", function(req, res) {
+	new TemperatureConfiguration(req.body)
 		.save()
 		.then(function(lightDevice) {
 			console.log("Save:", lightDevice.toJSON());
