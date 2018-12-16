@@ -1,7 +1,8 @@
 export class Switch {
     constructor(
-        public pin: number,
+        public id: number,
         public name: string,
+        public pin: number,
         public value: number
     ) {}
 }

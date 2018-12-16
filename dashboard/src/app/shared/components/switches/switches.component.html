@@ -1,7 +1,8 @@
 <section [formGroup]="form">
     <header>
-        <div class="cell">Pin</div>
+        <div class="cell">Id</div>
         <div class="cell">Name</div>
+        <div class="cell">Pin</div>
         <div class="cell">Value</div>
         <div class="cell">Edit</div>
     </header>
@@ -9,10 +10,13 @@
         <div class="row" *ngFor="let device of devices.controls; let i = index">
             <ng-container [formGroupName]="i">
                 <div class="cell">
-                    <input type="number" formControlName="pin" />
+                    <input type="number" formControlName="id" />
                 </div>
                 <div class="cell">
                     <input type="text" formControlName="name" />
+                </div>
+                <div class="cell">
+                    <input type="number" formControlName="pin" />
                 </div>
                 <div class="cell">
                     <input

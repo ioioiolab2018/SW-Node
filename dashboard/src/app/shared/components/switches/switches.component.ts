@@ -52,19 +52,23 @@ export class SwitchesComponent implements OnInit {
                     this.isDisabled.push(true);
                     controlsArray.push(
                         new FormGroup({
-                            pin: new FormControl(
-                                {
-                                    value: element.pin,
-                                    disabled: true
-                                },
-                                Validators.pattern("[0-9]*")
-                            ),
+                            id: new FormControl({
+                                value: element.id,
+                                disabled: true
+                            }),
                             name: new FormControl(
                                 {
                                     value: element.name,
                                     disabled: true
                                 },
                                 Validators.required
+                            ),
+                            pin: new FormControl(
+                                {
+                                    value: element.pin,
+                                    disabled: true
+                                },
+                                Validators.pattern("[0-9]*")
                             ),
                             value: new FormControl({
                                 value: element.value ? true : false,
@@ -86,11 +90,11 @@ export class SwitchesComponent implements OnInit {
         this.isDisabled[val] = false;
         formArray
             .at(val)
-            .get("pin")
+            .get("name")
             .enable();
         formArray
             .at(val)
-            .get("name")
+            .get("pin")
             .enable();
         formArray
             .at(val)
@@ -101,8 +105,9 @@ export class SwitchesComponent implements OnInit {
     saveDeviceConfiguration(control: FormGroup): void {
         this.httpService.saveSwitchesConfiguration(
             new Switch(
-                control.get("pin").value,
+                control.get("id").value,
                 control.value.name,
+                control.value.pin,
                 control.value.value ? 1 : 0
             )
         );
