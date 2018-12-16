@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { LightDevice } from "../model/light-device";
 import { Observable } from "rxjs";
 import { TemperatureDevice } from "../model/temperature-device";
+import { Switch } from "../model/switch";
 
 @Injectable({
     providedIn: "root"
@@ -12,6 +13,8 @@ export class HttpService {
     private lightConfigurationUrl = "api/light-configuration";
     private temperatureConfigurationsUrl = "api/temperature-configurations";
     private temperatureConfigurationUrl = "api/temperature-configuration";
+    private switchesConfigurationsUrl = "api/switches";
+    private switchConfigurationUrl = "api/switch";
     private httpOptions = {
         headers: new HttpHeaders({
             "Content-Type": "application/json"
@@ -44,6 +47,20 @@ export class HttpService {
         this.http
             .post<TemperatureDevice>(
                 this.temperatureConfigurationUrl,
+                JSON.stringify(val),
+                this.httpOptions
+            )
+            .subscribe();
+    }
+
+    getSwitchesConfigurations(): Observable<Array<Switch>> {
+        return this.http.get<Array<Switch>>(this.switchesConfigurationsUrl);
+    }
+
+    saveSwitchesConfiguration(val: Switch): void {
+        this.http
+            .post<Switch>(
+                this.switchConfigurationUrl,
                 JSON.stringify(val),
                 this.httpOptions
             )

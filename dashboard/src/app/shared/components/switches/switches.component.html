@@ -1,0 +1,66 @@
+<section [formGroup]="form">
+    <header>
+        <div class="cell">Pin</div>
+        <div class="cell">Name</div>
+        <div class="cell">Value</div>
+        <div class="cell">Edit</div>
+    </header>
+    <div class="temperatureDevices" formArrayName="devices">
+        <div class="row" *ngFor="let device of devices.controls; let i = index">
+            <ng-container [formGroupName]="i">
+                <div class="cell">
+                    <input type="number" formControlName="pin" />
+                </div>
+                <div class="cell">
+                    <input type="text" formControlName="name" />
+                </div>
+                <div class="cell">
+                    <input
+                        type="checkbox"
+                        id="{{'val' + i}}"
+                        formControlName="value"
+                    />
+                    <label for="{{'val' + i}}"></label>
+                </div>
+                <div class="cell buttons">
+                    <ng-container
+                        *ngIf="
+                            isDisabled[i];
+                            then: displayEditButton;
+                            else: displaySaveButton
+                        "
+                    >
+                    </ng-container>
+
+                    <ng-template #displayEditButton>
+                        <button
+                            type="button"
+                            class="edit"
+                            (click)="editDeviceConfiguration(i)"
+                        >
+                            <i class="material-icons md-12">edit</i>
+                        </button>
+                    </ng-template>
+
+                    <ng-template #displaySaveButton>
+                        <button
+                            type="button"
+                            class="cancel"
+                            (click)="cancelEditDeviceConfiguration()"
+                        >
+                            <i class="material-icons md-12">close</i>
+                        </button>
+                        <button
+                            type="button"
+                            class="save"
+                            (click)="saveDeviceConfiguration(device)"
+                            [disabled]="!device.valid"
+                        >
+                            <i class="material-icons md-12">save_alt</i>
+                        </button>
+                    </ng-template>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</section>
