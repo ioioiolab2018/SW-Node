@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
 const routes = require('./routes/index');
-var Promise = require('bluebird');
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
