@@ -4,6 +4,8 @@ import { LightDevice } from "../model/light-device";
 import { Observable } from "rxjs";
 import { TemperatureDevice } from "../model/temperature-device";
 import { Switch } from "../model/switch";
+import { LightValue } from "../model/light-value";
+import { TemperatureValue } from "../model/temperature-value";
 
 @Injectable({
     providedIn: "root"
@@ -15,6 +17,8 @@ export class HttpService {
     private temperatureConfigurationUrl = "api/temperature-configuration";
     private switchesConfigurationsUrl = "api/switches";
     private switchConfigurationUrl = "api/switch";
+    private lightValuesUrl = "api/light-history";
+    private temperatureValuesUrl = "api/temperature-history";
     private httpOptions = {
         headers: new HttpHeaders({
             "Content-Type": "application/json"
@@ -65,5 +69,15 @@ export class HttpService {
                 this.httpOptions
             )
             .subscribe();
+    }
+
+    getLightValues(): Observable<Array<LightValue>> {
+        return this.http.get<Array<LightValue>>(this.lightValuesUrl);
+    }
+
+    getTemperatureValues(): Observable<Array<TemperatureValue>> {
+        return this.http.get<Array<TemperatureValue>>(
+            this.temperatureValuesUrl
+        );
     }
 }

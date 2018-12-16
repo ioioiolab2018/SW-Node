@@ -30,6 +30,14 @@ const Change = bookshelf.Model.extend({
 	tableName: "changes"
 });
 
+const LightValue = bookshelf.Model.extend({
+	tableName: "lightValues"
+});
+
+const TemperatureValue = bookshelf.Model.extend({
+	tableName: "tempValues"
+});
+
 const PagesController = require("../controllers/PagesController");
 // const ApplicationsController = require('../controllers/ApplicationsController');
 
@@ -41,7 +49,7 @@ router.get("/api/light-configurations", function(req, res) {
 		})
 		.catch(function(error) {
 			console.log(error);
-			res.send("An error occured");
+			res.send(500, "An error occured");
 		});
 });
 
@@ -53,7 +61,7 @@ router.post("/api/light-configuration", function(req, res) {
 		})
 		.catch(function(error) {
 			console.log(error);
-			res.send("An error occured");
+			res.send(500, "An error occured");
 		});
 	new Change({
 		id: 1,
@@ -65,7 +73,7 @@ router.post("/api/light-configuration", function(req, res) {
 		})
 		.catch(function(error) {
 			console.log(error);
-			res.send("An error occured");
+			res.send(500, "An error occured");
 		});
 });
 
@@ -77,7 +85,7 @@ router.get("/api/temperature-configurations", function(req, res) {
 		})
 		.catch(function(error) {
 			console.log(error);
-			res.send("An error occured");
+			res.send(500, "An error occured");
 		});
 });
 
@@ -89,7 +97,7 @@ router.post("/api/temperature-configuration", function(req, res) {
 		})
 		.catch(function(error) {
 			console.log(error);
-			res.send("An error occured");
+			res.send(500, "An error occured");
 		});
 	new Change({
 		id: 1,
@@ -101,7 +109,7 @@ router.post("/api/temperature-configuration", function(req, res) {
 		})
 		.catch(function(error) {
 			console.log(error);
-			res.send("An error occured");
+			res.send(500, "An error occured");
 		});
 });
 
@@ -113,7 +121,7 @@ router.get("/api/switches", function(req, res) {
 		})
 		.catch(function(error) {
 			console.log(error);
-			res.send("An error occured");
+			res.send(500, "An error occured");
 		});
 });
 
@@ -125,7 +133,7 @@ router.post("/api/switch", function(req, res) {
 		})
 		.catch(function(error) {
 			console.log(error);
-			res.send("An error occured");
+			res.send(500, "An error occured");
 		});
 	new Change({
 		id: 1,
@@ -138,6 +146,30 @@ router.post("/api/switch", function(req, res) {
 		.catch(function(error) {
 			console.log(error);
 			res.send("An error occured");
+		});
+});
+
+router.get("/api/light-history", function(req, res) {
+	new LightValue()
+		.fetchAll()
+		.then(function(history) {
+			res.send(history.toJSON());
+		})
+		.catch(function(error) {
+			console.log(error);
+			res.send(500, "An error occured");
+		});
+});
+
+router.get("/api/temperature-history", function(req, res) {
+	new TemperatureValue()
+		.fetchAll()
+		.then(function(history) {
+			res.send(history.toJSON());
+		})
+		.catch(function(error) {
+			console.log(error);
+			res.send(500, "An error occured");
 		});
 });
 

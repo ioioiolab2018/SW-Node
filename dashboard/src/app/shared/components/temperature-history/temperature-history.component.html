@@ -1,0 +1,19 @@
+<section>
+    <h1>Temperature history</h1>
+    <header>
+        <div class="cell">Nr</div>
+        <div class="cell">Name</div>
+        <div class="cell">Temperature</div>
+        <div class="cell">Humidity</div>
+        <div class="cell">Value</div>
+    </header>
+    <div class="history">
+        <div class="row" *ngFor="let row of history; let i = index">
+            <div class="cell">{{ i + 1 }}</div>
+            <div class="cell">{{ row.name }}</div>
+            <div class="cell">{{ row.temperature }}</div>
+            <div class="cell">{{ row.humidity }}</div>
+            <div class="cell">{{ row.time | date: "dd.MM.yyyy, HH:mm" }}</div>
+        </div>
+    </div>
+</section>

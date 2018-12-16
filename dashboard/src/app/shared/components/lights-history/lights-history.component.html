@@ -1,0 +1,17 @@
+<section>
+    <h1>Light history</h1>
+    <header>
+        <div class="cell">Nr</div>
+        <div class="cell">Name</div>
+        <div class="cell">Lux</div>
+        <div class="cell">Value</div>
+    </header>
+    <div class="history">
+        <div class="row" *ngFor="let row of history; let i = index">
+            <div class="cell">{{ i + 1 }}</div>
+            <div class="cell">{{ row.name }}</div>
+            <div class="cell">{{ row.lux }}</div>
+            <div class="cell">{{ row.time | date: "dd.MM.yyyy, HH:mm" }}</div>
+        </div>
+    </div>
+</section>
